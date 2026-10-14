@@ -1,0 +1,21 @@
+syntax = "proto3";
+package users;
+
+option go_package = "github.com/sambacarlson/learning-grpc/users";
+
+service UserService { rpc GetUser(GetUserRequest) returns (UserProfile); }
+
+message User {
+  int64 id = 1;
+  string name = 2;
+  repeated RoleType roles = 3;
+}
+
+enum RoleType {
+  ROLE_UNSPECIFIED = 0;
+  ROLE_ADMIN = 1;
+  ROLE_USER = 2;
+}
+
+message GetUserRequest { int64 id = 1; }
+message UserProfile { User user = 1; }
