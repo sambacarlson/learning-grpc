@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package todo;
+
+option go_package = "github.com/sambacarlson/learning-grpc/todo_app/todo";
+
+import "google/protobuf/timestamp.proto";
+
+service TodoService {
+  rpc CreateTodo(CreateTodoRequest) returns (Todo);
+  rpc GetTodos(GetTodosRequest) returns (GetTodosResponse);
+  rpc UpdateTodo(UpdateTodoRequest) returns (Todo);
+  rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
+}
+
+enum Category {
+  CATEGORY_UNSPECIFIED = 0;
+  CATEGORY_NORMAL = 1;
+  CATEGORY_URGENT = 2;
+}
+
+message Todo {
+  int64 id = 1;
+  string title = 2;
+  Category category = 3;
+  bool completed = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message CreateTodoRequest {
+  string title = 1;
+  Category category = 2;
+}
+
+message GetTodosRequest {}
+message GetTodosResponse { repeated Todo todos = 1; }
+message UpdateTodoRequest {
+  int64 id = 1;
+  string title = 2;
+  Category category = 3;
+  bool completed = 4;
+}
+message DeleteTodoRequest { int64 id = 1; }
+message DeleteTodoResponse { int64 id = 1; }
